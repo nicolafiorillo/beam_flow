@@ -1,3 +1,3 @@
 # BeamFlow
 
-Init.
+The event source ecosystem for the BEAM.
