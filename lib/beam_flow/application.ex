@@ -10,7 +10,11 @@ defmodule BeamFlow.Application do
     children = [
       # Starts a worker by calling: BeamFlow.Worker.start_link(arg)
       # {BeamFlow.Worker, arg}
-      {Persistence, []}
+      {Persistence,
+       [
+         db_path: Application.get_env(:beam_flow, :db_path) || "",
+         db_options: Application.get_env(:beam_flow, :db_options) || []
+       ]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

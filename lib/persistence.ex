@@ -5,19 +5,24 @@ defmodule Persistence do
   use GenServer
 
   def start_link(opts \\ []) do
-    GenServer.start_link(__MODULE__, opts, name: __MODULE__)
+    db_path = Keyword.fetch!(opts, :db_path)
+    db_options = Keyword.fetch!(opts, :db_options)
+
+    if String.trim(db_path) == "" do
+      raise(ArgumentError, "db_path cannot be empty")
+    end
+
+    GenServer.start_link(__MODULE__, %{db_path: db_path, db_options: db_options}, name: __MODULE__)
   end
 
   # Init
 
   @impl true
-  def init(_opts) do
-    path = ~c"/tmp/rocksdb.fold.test"
+  def init(%{db_path: db_path, db_options: db_options}) do
+    path = String.to_charlist(db_path)
 
-    {:ok, db} = :rocksdb.open(path, create_if_missing: true)
-
-    state = %{counter: 0, db: db}
-    {:ok, state}
+    {:ok, db} = :rocksdb.open(path, db_options)
+    {:ok, %{db_path: db_path, db: db}}
   end
 
   # Api
