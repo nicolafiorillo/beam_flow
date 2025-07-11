@@ -3,8 +3,13 @@ ExUnit.start()
 defmodule BeamFlow.TestHelper do
   @moduledoc false
 
-  def a_key() do
-    random_key = :crypto.strong_rand_bytes(64)
-    Base.encode64(random_key)
+  def a_key(), do: UUID.uuid4(:hex)
+
+  def an_event() do
+    Event.new(
+      a_key(),
+      "test_event",
+      %{data: "test_data"}
+    )
   end
 end

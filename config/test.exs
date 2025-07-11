@@ -5,3 +5,5 @@ config :beam_flow,
   db_options: [
     in_memory: true
   ]
+
+config :logger, :default_handler, false

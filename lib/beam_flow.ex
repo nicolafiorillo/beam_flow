@@ -1,18 +1,13 @@
 defmodule BeamFlow do
   @moduledoc """
-  Documentation for `BeamFlow`.
+  Public API for the BeamFlow system.
   """
 
   @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> BeamFlow.hello()
-      :world
-
+  Add an event.
   """
-  def hello do
-    :world
+  @spec add_event(Event.t()) :: {:ok, String.t()} | {:error, term()}
+  def add_event(event) do
+    Writer.put_event(event, event.type)
   end
 end

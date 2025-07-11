@@ -1,17 +1,24 @@
-defmodule PersistenceTest do
+defmodule WriterTest do
   use ExUnit.Case
-  doctest BeamFlow
 
   import BeamFlow.TestHelper
 
   test "a write and its read" do
     key = a_key()
 
-    Persistence.put(key, "value")
-    assert Persistence.get(key) == {:ok, "value"}
+    Writer.put(key, "value")
+    assert Writer.get(key) == {:ok, "value"}
   end
 
   test "an unknown key" do
-    assert Persistence.get(a_key()) == :not_found
+    assert Writer.get(a_key()) == :not_found
+  end
+
+  test "events are inserted in the correct order" do
+    1..100
+    |> Enum.each(fn n ->
+      event = an_event()
+      assert BeamFlow.add_event(event) == {:ok, "e/#{n}/test_event"}
+    end)
   end
 end

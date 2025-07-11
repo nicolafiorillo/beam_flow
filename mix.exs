@@ -28,6 +28,7 @@ defmodule BeamFlow.MixProject do
       # RocksDB requires:
       #   sudo apt install build-essential cmake libsnappy-dev zlib1g-dev libbz2-dev libgflags-dev liblz4-dev libzstd-dev
       {:rocksdb, "~> 1.9"},
+      {:elixir_uuid, "~> 1.2"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end

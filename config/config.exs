@@ -9,4 +9,8 @@ config :beam_flow,
     compression: :snappy_compression
   ]
 
+config :logger, :default_formatter,
+  format: "[$level] $message $metadata\n",
+  metadata: [:error_code, :file]
+
 import_config "#{config_env()}.exs"
